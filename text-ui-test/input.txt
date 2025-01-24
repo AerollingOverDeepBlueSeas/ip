@@ -1,0 +1,8 @@
+list
+todo water plants
+list
+deadline complete this task /by today 2359
+list
+event lecture /from today 1600 /to 1700
+list
+bye
