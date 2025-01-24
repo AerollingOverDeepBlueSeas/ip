@@ -1,6 +1,17 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+enum Command {
+    LIST,
+    TODO,
+    DEADLINE,
+    EVENT,
+    MARK,
+    UNMARK,
+    DELETE,
+    BYE;
+}
+
 public class Tete {
 
     public static ArrayList<Task> tasks = new ArrayList<>();
@@ -46,43 +57,50 @@ public class Tete {
         while (!input.equalsIgnoreCase("bye")) {
             try {
                 input = sc.nextLine();
-                if (input.equalsIgnoreCase("list")) {
-                    displayItems();
-                } else if (!input.equalsIgnoreCase("bye")) {
-                    inputs = input.split(" ");
-
-                    if (inputs[0].equalsIgnoreCase("mark")) {
-                        int index = Integer.parseInt(inputs[1]) - 1;
+                inputs = input.split(" ");
+                Command command = null;
+                try {
+                    command = Command.valueOf(input.toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    throw new InvalidCommandException();
+                }
+                int index;
+                switch (command) {
+                    case LIST:
+                        displayItems();
+                        break;
+                    case MARK:
+                        index = Integer.parseInt(inputs[1]) - 1;
                         if (index >= 0 && index < tasks.size()) {
                             tasks.get(index).markAsDone();
                         } else {
                             throw new InvalidIndexException();
                         }
-
-                    } else if (inputs[0].equalsIgnoreCase("unmark")) {
-                        int index = Integer.parseInt(inputs[1]) - 1;
+                        break;
+                    case UNMARK:
+                        index = Integer.parseInt(inputs[1]) - 1;
                         if (index >= 0 && index < tasks.size()) {
                             tasks.get(index).unmarkAsDone();
                         } else {
                             throw new InvalidIndexException();
                         }
-
-                    } else if (inputs[0].equalsIgnoreCase("delete")) {
-                        int index = Integer.parseInt(inputs[1]) - 1;
+                        break;
+                    case DELETE:
+                        index = Integer.parseInt(inputs[1]) - 1;
                         if (index >= 0 && index < tasks.size()) {
                             removeItem(index);
                         } else {
                             throw new InvalidIndexException();
                         }
-
-                    } else if (inputs[0].equals("todo")) {
+                        break;
+                    case TODO:
                         if (inputs.length > 1) {
                             addItem(new Todo(input.replaceFirst("todo ", "")));
                         } else {
                             throw new EmptyTodoException();
                         }
-
-                    } else if (inputs[0].equals("deadline")) {
+                        break;
+                    case DEADLINE:
                         if (inputs.length > 1) {
                             if (input.contains(" /by ")) {
                                 String[] temp = input.replaceFirst("deadline ", "").split(" /by ");
@@ -93,8 +111,8 @@ public class Tete {
                         } else {
                             throw new EmptyDeadlineException();
                         }
-
-                    } else if (inputs[0].equals("event")) {
+                        break;
+                    case EVENT:
                         if (inputs.length > 1) {
                             if (input.contains(" /from ") && input.contains(" /to ")) {
                                 String[] temp = input.replaceFirst("event ", "")
@@ -112,11 +130,6 @@ public class Tete {
                         } else {
                             throw new EmptyEventException();
                         }
-
-                    } else {
-                        // No idea what the command is
-                        throw (new InvalidCommandException());
-                    }
                 }
             } catch (TeteException e) {
                 System.out.println(e.getMessage());
