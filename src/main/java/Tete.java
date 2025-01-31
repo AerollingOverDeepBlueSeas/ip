@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
+import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -39,10 +41,10 @@ public class Tete {
             newTask = new Todo(components[2], components[1].equals("X"));
         } else if (components[0].equals("D")) {
             // Deadline
-            newTask = new Deadline(components[2], components[3], components[1].equals("X"));
+            newTask = new Deadline(components[2], LocalDate.parse(components[3]), components[1].equals("X"));
         } else if (components[0].equals("E")) {
             // Event
-            newTask = new Event(components[1], components[2], components[3], components[1].equals("X"));
+            newTask = new Event(components[1], LocalDate.parse(components[2]), LocalDate.parse(components[3]), components[1].equals("X"));
         }
 
         tasks.add(newTask);
@@ -60,6 +62,14 @@ public class Tete {
         int index = 0;
         for (Task task : tasks) {
             System.out.println("\t" + Integer.valueOf(++index).toString() + ". " + task.toString());
+        }
+    }
+
+    public static LocalDate validateDate(String input) throws InvalidDateException {
+        try {
+            return LocalDate.parse(input);
+        } catch (Exception e) {
+            throw new InvalidDateException();
         }
     }
 
@@ -83,6 +93,8 @@ public class Tete {
         String greeting = """
                     Greetings, I'm Tete.
                     How may I be of service to you?
+                    Currently, I appear to be a tracker of deadlines, events, and tasks to be done.
+                    (Note: Dates and times are entered in the format yyyy-mm-dd)
                 """;
         String farewell = "\tFarewell. May our paths cross again soon." +
                 "\n\t...or not.";
@@ -155,7 +167,8 @@ public class Tete {
                             if (inputs.length > 1) {
                                 if (input.contains(" /by ")) {
                                     String[] temp = input.replaceFirst("deadline ", "").split(" /by ");
-                                    addItem(new Deadline(temp[0], temp[1]));
+                                    LocalDate by = validateDate(temp[1]);
+                                    addItem(new Deadline(temp[0], by));
                                 } else {
                                     throw new MissingFieldException("/by");
                                 }
@@ -171,7 +184,9 @@ public class Tete {
                                             .replaceFirst(" /to ", "---")
                                             .split("---");
                                     if (temp.length == 3) {
-                                        addItem(new Event(temp[0], temp[1], temp[2]));
+                                        LocalDate from = validateDate(temp[1]);
+                                        LocalDate to = validateDate(temp[2]);
+                                        addItem(new Event(temp[0], from, to));
                                     } else {
                                         throw new MissingFieldContentsException("/from and/or /to");
                                     }
