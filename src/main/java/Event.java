@@ -1,15 +1,18 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Event extends Task {
 
-    protected String start;
-    protected String end;
+    protected LocalDate start;
+    protected LocalDate end;
 
-    public Event(String newItem, String start, String end) {
+    public Event(String newItem, LocalDate start, LocalDate end) {
         super(newItem);
         this.start = start;
         this.end = end;
     }
 
-    public Event(String newItem, String start, String end, boolean done) {
+    public Event(String newItem, LocalDate start, LocalDate end, boolean done) {
         super(newItem, done);
         this.start = start;
         this.end = end;
@@ -22,7 +25,9 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]["+this.getStatus()+"] " + this.description + " (from: " + this.start + " to: " + this.end + ")";
+        return "[E]["+this.getStatus()+"] " + this.description + " (from: " +
+                this.start.format(DateTimeFormatter.ofPattern("MMM d yyyy")) +
+                " to: " + this.end.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
     }
 
 }
