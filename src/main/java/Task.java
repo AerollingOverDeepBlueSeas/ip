@@ -1,6 +1,8 @@
 
 public class Task {
 
+    // TODO move error checking here
+
     protected String description;
     protected boolean isDone;
     protected String data;

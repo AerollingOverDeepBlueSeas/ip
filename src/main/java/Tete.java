@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,18 +31,18 @@ public class Tete {
     }
 
     public static void addItemFromFile(String line) {
-        String[] components = line.split(new String(" | "));
+        String[] components = line.split(" \\| ");
         Task newTask = new Task("default");
 
         if (components[0].equals("T")) {
             // Todo
-            newTask = new Todo(components[1]);
+            newTask = new Todo(components[2], components[1].equals("X"));
         } else if (components[0].equals("D")) {
             // Deadline
-            newTask = new Deadline(components[1], components[2]);
+            newTask = new Deadline(components[2], components[3], components[1].equals("X"));
         } else if (components[0].equals("E")) {
             // Event
-            newTask = new Event(components[0], components[1], components[2]);
+            newTask = new Event(components[1], components[2], components[3], components[1].equals("X"));
         }
 
         tasks.add(newTask);
@@ -62,6 +63,20 @@ public class Tete {
         }
     }
 
+    public static int validateIndex(String input) throws InvalidIndexException {
+        try {
+            int index = Integer.parseInt(input) - 1;
+            if (index < 0 || index >= tasks.size()) {
+                throw new InvalidIndexException();
+            }
+            return index;
+        } catch (Exception e) {
+            // Any exceptions caught here is caused by an invalid index
+            throw new InvalidIndexException();
+        }
+
+    }
+
     public static void main(String[] args) {
 
         String line = "\t⊱ ──── {⋆⌘⋆} ──── ⊰⊱ ────── {⋆⌘⋆} ────── ⊰⊱ ──── {⋆⌘⋆} ──── ⊰";
@@ -76,119 +91,123 @@ public class Tete {
         PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
 
         pw.println(line);
-        pw.println(greeting);
-        pw.println(line);
-        String input = "";
-        String[] inputs;
 
-        File data;
-        FileWriter fw;
+        String input;
+        String[] inputs;
 
         // Attempting to create a file to store the information
         try {
-            data = new File("./src/main/data/list.txt");
+            File data = new File("./src/main/data/list.txt");
+            Scanner contents = new Scanner(data);
             if (data.createNewFile()) {
-                pw.println("New file initialised.");
+                pw.println("\tNew file initialised.");
             } else {
-                pw.println("There appears to be existing data from the record. They shall be added to the list.");
+                pw.println("\tThere appears to be existing data from the record. They shall be added to the list.");
+                while (contents.hasNextLine()) {
+                    input = contents.nextLine().strip();
+                    if (!input.isEmpty()) {
+                        addItemFromFile(input);
+                    }
+                }
             }
-            fw = new FileWriter(data);
+            FileWriter fw = new FileWriter(data);
+            pw.println(line);
+            pw.println(greeting);
+            pw.println(line);
+            pw.flush();
+            input = "";
+
+            while (!input.equalsIgnoreCase("bye")) {
+                try {
+                    input = sc.nextLine();
+                    inputs = input.split(" ");
+                    Command command;
+                    try {
+                        command = Command.valueOf(inputs[0].toUpperCase());
+                    } catch (IllegalArgumentException e) {
+                        throw new InvalidCommandException();
+                    }
+                    int index;
+                    switch (command) {
+                        case LIST:
+                            displayItems();
+                            break;
+                        case MARK:
+                            index = validateIndex(inputs[1]);
+                            tasks.get(index).markAsDone();
+                            break;
+                        case UNMARK:
+                            index = validateIndex(inputs[1]);
+                            tasks.get(index).unmarkAsDone();
+                            break;
+                        case DELETE:
+                            index = validateIndex(inputs[1]);
+                            removeItem(index);
+                            break;
+                        case TODO:
+                            if (inputs.length > 1) {
+                                addItem(new Todo(input.replaceFirst("todo ", "")));
+                            } else {
+                                throw new EmptyTodoException();
+                            }
+                            break;
+                        case DEADLINE:
+                            if (inputs.length > 1) {
+                                if (input.contains(" /by ")) {
+                                    String[] temp = input.replaceFirst("deadline ", "").split(" /by ");
+                                    addItem(new Deadline(temp[0], temp[1]));
+                                } else {
+                                    throw new MissingFieldException("/by");
+                                }
+                            } else {
+                                throw new EmptyDeadlineException();
+                            }
+                            break;
+                        case EVENT:
+                            if (inputs.length > 1) {
+                                if (input.contains(" /from ") && input.contains(" /to ")) {
+                                    String[] temp = input.replaceFirst("event ", "")
+                                            .replaceFirst(" /from ", "---")
+                                            .replaceFirst(" /to ", "---")
+                                            .split("---");
+                                    if (temp.length == 3) {
+                                        addItem(new Event(temp[0], temp[1], temp[2]));
+                                    } else {
+                                        throw new MissingFieldContentsException("/from and/or /to");
+                                    }
+                                } else {
+                                    throw new MissingFieldException(" /from and/or /to");
+                                }
+                            } else {
+                                throw new EmptyEventException();
+                            }
+                        case BYE:
+                            for (Task task : tasks) {
+                                fw.write(task.toData() + "\n");
+                            }
+                            break;
+                    }
+                } catch (TeteException e) {
+                    pw.println(e.getMessage());
+                } finally {
+                    pw.println();
+                    pw.println(line);
+                    pw.flush();
+                }
+            }
+
+            fw.close();
+
         } catch (IOException e) {
             pw.println(e.getMessage());
         } finally {
             pw.flush();
         }
 
-        while (!input.equalsIgnoreCase("bye")) {
-            try {
-                input = sc.nextLine();
-                inputs = input.split(" ");
-                Command command;
-                try {
-                    command = Command.valueOf(inputs[0].toUpperCase());
-                } catch (IllegalArgumentException e) {
-                    throw new InvalidCommandException();
-                }
-                int index;
-                switch (command) {
-                    case LIST:
-                        displayItems();
-                        break;
-                    case MARK:
-                        index = Integer.parseInt(inputs[1]) - 1;
-                        if (index >= 0 && index < tasks.size()) {
-                            tasks.get(index).markAsDone();
-                        } else {
-                            throw new InvalidIndexException();
-                        }
-                        break;
-                    case UNMARK:
-                        index = Integer.parseInt(inputs[1]) - 1;
-                        if (index >= 0 && index < tasks.size()) {
-                            tasks.get(index).unmarkAsDone();
-                        } else {
-                            throw new InvalidIndexException();
-                        }
-                        break;
-                    case DELETE:
-                        index = Integer.parseInt(inputs[1]) - 1;
-                        if (index >= 0 && index < tasks.size()) {
-                            removeItem(index);
-                        } else {
-                            throw new InvalidIndexException();
-                        }
-                        break;
-                    case TODO:
-                        if (inputs.length > 1) {
-                            addItem(new Todo(input.replaceFirst("todo ", "")));
-                        } else {
-                            throw new EmptyTodoException();
-                        }
-                        break;
-                    case DEADLINE:
-                        if (inputs.length > 1) {
-                            if (input.contains(" /by ")) {
-                                String[] temp = input.replaceFirst("deadline ", "").split(" /by ");
-                                addItem(new Deadline(temp[0], temp[1]));
-                            } else {
-                                throw new MissingFieldException("/by");
-                            }
-                        } else {
-                            throw new EmptyDeadlineException();
-                        }
-                        break;
-                    case EVENT:
-                        if (inputs.length > 1) {
-                            if (input.contains(" /from ") && input.contains(" /to ")) {
-                                String[] temp = input.replaceFirst("event ", "")
-                                        .replaceFirst(" /from ", "---")
-                                        .replaceFirst(" /to ", "---")
-                                        .split("---");
-                                if (temp.length == 3) {
-                                    addItem(new Event(temp[0], temp[1], temp[2]));
-                                } else {
-                                    throw new MissingFieldContentsException("/from and/or /to");
-                                }
-                            } else {
-                                throw new MissingFieldException(" /from and/or /to");
-                            }
-                        } else {
-                            throw new EmptyEventException();
-                        }
-                    case BYE:
-                        break;
-                }
-            } catch (TeteException e) {
-                pw.println(e.getMessage());
-            } finally {
-                pw.println();
-                pw.println(line);
-                pw.flush();
-            }
-        }
-
         pw.println(farewell);
         pw.println(line);
         pw.flush();
+        pw.close();
+
     }
 }
