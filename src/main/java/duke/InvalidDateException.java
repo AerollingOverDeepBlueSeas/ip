@@ -1,3 +1,5 @@
+package duke;
+
 public class InvalidDateException extends TeteException {
     public InvalidDateException() {
         super("""

@@ -1,3 +1,5 @@
+package duke;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -40,13 +42,13 @@ public class TaskList {
         Task newTask = new Task("default");
 
         if (components[0].equals("T")) {
-            // Todo
+            // duke.Todo
             newTask = new Todo(components[2], components[1].equals("X"));
         } else if (components[0].equals("D")) {
-            // Deadline
+            // duke.Deadline
             newTask = new Deadline(components[2], LocalDate.parse(components[3]), components[1].equals("X"));
         } else if (components[0].equals("E")) {
-            // Event
+            // duke.Event
             newTask = new Event(components[2], LocalDate.parse(components[3]),
                     LocalDate.parse(components[4]), components[1].equals("X"));
         }

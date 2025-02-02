@@ -1,3 +1,5 @@
+package duke;
+
 public class EmptyDeadlineException extends TeteException {
     public EmptyDeadlineException() {
         super("""

@@ -1,3 +1,5 @@
+package duke;
+
 public class InvalidIndexException extends TeteException {
     public InvalidIndexException() {
         super("""

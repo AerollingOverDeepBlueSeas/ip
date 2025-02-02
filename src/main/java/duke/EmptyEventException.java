@@ -1,3 +1,5 @@
+package duke;
+
 public class EmptyEventException extends TeteException {
     public EmptyEventException() {
         super("""
