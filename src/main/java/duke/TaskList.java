@@ -136,4 +136,13 @@ public class TaskList {
         return dataList;
     }
 
+    public void findAndDisplay(String input) {
+        int index = 0;
+        for (Task task : tasks) {
+            if (task.getDescription().equals(input)) {
+                System.out.println("\t" + Integer.valueOf(++index).toString() + ". " + task.toString());
+            }
+        }
+    }
+
 }

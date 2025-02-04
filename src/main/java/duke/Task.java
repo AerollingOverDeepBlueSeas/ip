@@ -56,12 +56,18 @@ public class Task {
         System.out.println("\t"+this.toString());
     }
 
+
     /** Returns formatted string representation of the task.
      * For saving to file on program termination.
      */
     public String toData() {
         return "";
     }
+
+    public String getDescription() {
+        return this.description;
+    }
+
 
     @Override
     public String toString() {
