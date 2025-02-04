@@ -3,9 +3,10 @@ package duke;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/** Represents the process that parses and executes the commands input by the user. */
 public class Parser {
 
-    enum Command {
+    private enum Command {
         LIST,
         TODO,
         DEADLINE,
@@ -16,6 +17,12 @@ public class Parser {
         BYE
     }
 
+    /** Validates the date given in yyyy-mm-dd format and returns it as a LocalDate if date is valid.
+     *
+     * @param input String of (possibly) a date in format yyyy-mm-dd.
+     * @return LocalDate of given date if input is valid.
+     * @throws InvalidDateException if input is not a date, not a valid date, or in the wrong format.
+     */
     public static LocalDate validateDate(String input) throws InvalidDateException {
         try {
             return LocalDate.parse(input);
@@ -24,10 +31,20 @@ public class Parser {
         }
     }
 
+    /** Creates a new Parser object.
+     * As no attributes are needed by Parser, this function is empty.
+     */
     public Parser() {
 
     }
 
+    /** Processes, validates and executes commands.
+     *
+     * @param input from user, which may contain a valid command.
+     * @param tasks for commands involving the current list of tasks.
+     * @param storage for commands involving file operations.
+     * @throws TeteException if command is invalid or other exceptions are encountered when executing a valid command.
+     */
     public void parseCommand(String input, TaskList tasks, Storage storage) throws TeteException {
         Command command;
         String[] inputs = input.split(" ");

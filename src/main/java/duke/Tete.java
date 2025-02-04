@@ -1,5 +1,6 @@
 package duke;
 
+/** Class that contains the main program */
 public class Tete {
 
     private static final TaskList tasks = new TaskList();
@@ -10,7 +11,6 @@ public class Tete {
     public static void main(String[] args) {
 
         String input = "";
-        String[] inputs;
 
         ui.start();
         for (String entry : storage.readContents()) {

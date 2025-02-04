@@ -1,6 +1,9 @@
 package duke;
 
+/** Represents exception caused when the command keyword is invalid. */
 public class InvalidCommandException extends TeteException {
+
+    /** Creates a new InvalidCommandException. */
     public InvalidCommandException() {
         super("""
                 \tI am afraid I do not understand this command.\
