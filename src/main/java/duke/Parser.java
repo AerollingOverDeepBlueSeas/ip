@@ -66,7 +66,11 @@ public class Parser {
                         LocalDate by = Parser.validateDate(temp[1]);
                         tasks.addItem(new Deadline(temp[0], by));
                     } else {
-                        throw new MissingFieldException("/by");
+                        if (input.contains("/by")) {
+                            throw new MissingFieldContentsException("/by");
+                        } else {
+                            throw new MissingFieldException("/by");
+                        }
                     }
                 } else {
                     throw new EmptyDeadlineException();
@@ -87,7 +91,11 @@ public class Parser {
                             throw new MissingFieldContentsException("/from and/or /to");
                         }
                     } else {
-                        throw new MissingFieldException(" /from and/or /to");
+                        if (input.contains(" /to")) {
+                            throw new MissingFieldContentsException("/to");
+                        } else {
+                            throw new MissingFieldException("/from and/or /to");
+                        }
                     }
                 } else {
                     throw new EmptyEventException();
