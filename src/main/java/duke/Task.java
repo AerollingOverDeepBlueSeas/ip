@@ -35,6 +35,10 @@ public class Task {
         System.out.println("\t"+this.toString());
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
     public String toData() {
         return "";
     }
