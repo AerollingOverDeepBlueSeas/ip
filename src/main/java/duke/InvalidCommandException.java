@@ -10,6 +10,6 @@ public class InvalidCommandException extends TeteException {
                 
                 \tOf course, it is just as likely a result of my ignorance as it is your incompetence.\
                 
-                \t(Commands supported currently: todo, deadline, event, mark, unmark, delete, bye""");
+                \t(Commands supported currently: todo, deadline, event, mark, unmark, delete, find, bye""");
     }
 }
