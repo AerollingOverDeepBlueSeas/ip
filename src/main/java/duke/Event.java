@@ -19,7 +19,8 @@ public class Event extends Task {
         this.end = end;
     }
 
-    /** Creates a new event.
+    /**
+     * Creates a new event.
      * Takes on additional parameter to initialise completed tasks.
      * Only used to recover data from file on initialisation.
      */
@@ -36,7 +37,7 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]["+this.getStatus()+"] " + this.description + " (from: " +
+        return "[E][" + this.getStatus() + "] " + this.description + " (from: " +
                 this.start.format(DateTimeFormatter.ofPattern("MMM d yyyy")) +
                 " to: " + this.end.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
     }

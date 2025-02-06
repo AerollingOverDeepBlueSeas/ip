@@ -11,12 +11,13 @@ public class Deadline extends Task{
     protected LocalDate deadline;
 
     /** Creates a new deadline. */
-    public Deadline(String newItem, LocalDate deadline){
+    public Deadline(String newItem, LocalDate deadline) {
         super(newItem);
         this.deadline = deadline;
     }
 
-    /** Creates a new deadline.
+    /**
+     * Creates a new deadline.
      * Takes on additional parameter to initialise completed tasks.
      * Only used to recover data from file on initialisation.
      */
@@ -31,8 +32,8 @@ public class Deadline extends Task{
     }
 
     @Override
-    public String toString(){
-        return "[D]["+this.getStatus()+"] " + this.description + " (by: " +
+    public String toString() {
+        return "[D][" + this.getStatus() + "] " + this.description + " (by: " +
                 this.deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
     }
 

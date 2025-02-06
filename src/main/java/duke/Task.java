@@ -13,7 +13,8 @@ public class Task {
     /** Formatted String containing all information, to be written to file on program termination. */
     protected String data;
 
-    /** Creates a task.
+    /**
+     * Creates a task.
      * Assumes task to be incomplete by default.
      */
     public Task(String description) {
@@ -21,7 +22,8 @@ public class Task {
         this.isDone = false;
     }
 
-    /** Creates a task.
+    /**
+     * Creates a task.
      * Takes on additional parameter to initialise completed tasks.
      * Only used to recover data from file on initialisation.
      */
@@ -30,14 +32,16 @@ public class Task {
         this.isDone = done;
     }
 
-    /** Returns different string depending on completion status.
+    /**
+     * Returns different string depending on completion status.
      * @return X if task is complete, and an empty space otherwise.
      */
     public String getStatus() {
         return this.isDone ? "X" : " ";
     }
 
-    /** Marks task as done.
+    /**
+     * Marks task as done.
      * Currently, tasks already done can still be marked as done.
      */
     public void markAsDone() {
@@ -45,7 +49,8 @@ public class Task {
         UI.displaySuccessfulMarkMessage(this);
     }
 
-    /** Marks task as not done.
+    /**
+     * Marks task as not done.
      * Currently, tasks already done can still be marked as not done.
      */
     public void unmarkAsDone() {
@@ -54,7 +59,8 @@ public class Task {
     }
 
 
-    /** Returns formatted string representation of the task.
+    /**
+     * Returns formatted string representation of the task.
      * For saving to file on program termination.
      */
     public String toData() {
@@ -68,7 +74,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "["+this.getStatus()+"] " + this.description;
+        return "[" + this.getStatus() + "] " + this.description;
     }
 
 }

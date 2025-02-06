@@ -3,7 +3,8 @@ package duke;
 /** Represents exception caused when some of the fields are missing from the command. */
 public class MissingFieldContentsException extends TeteException {
 
-    /** Creates a new MissingFieldContentsException.
+    /**
+     * Creates a new MissingFieldContentsException.
      *
      * @param field specifies the field of the command that is missing contents.
      */

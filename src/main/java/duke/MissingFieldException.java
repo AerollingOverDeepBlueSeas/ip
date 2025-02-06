@@ -3,7 +3,8 @@ package duke;
 /** Represents exception caused when a field keyword is missing from a command that needs it. */
 public class MissingFieldException extends TeteException {
 
-    /** Creates a new MissingFieldException.
+    /**
+     * Creates a new MissingFieldException.
      *
      * @param component specifies the field keyword that is missing from the command.
      */

@@ -39,7 +39,8 @@ public class UI {
         pw.flush();
     }
 
-    /** Receives a line of user input and returns it.
+    /**
+     * Receives a line of user input and returns it.
      *
      * @return the user input as a String
      */

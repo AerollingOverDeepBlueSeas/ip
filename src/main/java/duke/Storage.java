@@ -14,7 +14,8 @@ public class Storage {
     private final Scanner sc;
     private final ArrayList<String> initContent;
 
-    /** Creates a new Storage for the session.
+    /**
+     * Creates a new Storage for the session.
      * Creates new file reader and writer.
      */
     public Storage() {
@@ -39,7 +40,8 @@ public class Storage {
         return list;
     }
 
-    /** Return contents already stored in the file on opening.
+    /**
+     * Return contents already stored in the file on opening.
      *
      * @return contents stored in file as ArrayList of String.
      */
@@ -47,7 +49,8 @@ public class Storage {
         return initContent;
     }
 
-    /** Saves entries from parameter and closes file reader and writer.
+    /**
+     * Saves entries from parameter and closes file reader and writer.
      *
      * @param items containing String of data representation of all items in list during session.
      * @throws IOException when issues arise while writing to the file.

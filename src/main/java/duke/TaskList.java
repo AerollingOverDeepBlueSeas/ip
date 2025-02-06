@@ -13,7 +13,8 @@ public class TaskList {
         tasks = new ArrayList<>();
     }
 
-    /** Adds a new task to the back of the list.
+    /**
+     * Adds a new task to the back of the list.
      *
      * @param newTask to be added to the list.
      */
@@ -22,7 +23,8 @@ public class TaskList {
         UI.displaySuccessfulAddMessage(newTask, tasks);
     }
 
-    /** Removes a task from the list, given its position in the list.
+    /**
+     * Removes a task from the list, given its position in the list.
      *
      * @param input String representation of the position of the task.
      * @throws InvalidIndexException when the input leads to an invalid index.
@@ -45,7 +47,8 @@ public class TaskList {
         }
     }
 
-    /** Adds item to list, given the formatted String representation of the task.
+    /**
+     * Adds item to list, given the formatted String representation of the task.
      * Constructs a new item from the data in the String, and adds it to the list.
      *
      * @param line containing contents of the task
@@ -72,7 +75,8 @@ public class TaskList {
 
     }
 
-    /** Marks item specified to be completed.
+    /**
+     * Marks item specified to be completed.
      * A completed item can still be marked as completed again.
      *
      * @param input String representation of the position of the task.
@@ -87,7 +91,8 @@ public class TaskList {
         }
     }
 
-    /** Marks item specified to be not completed.
+    /**
+     * Marks item specified to be not completed.
      * An incomplete item can still be marked as incomplete again.
      *
      * @param input String representation of the position of the task.
@@ -102,7 +107,8 @@ public class TaskList {
         }
     }
 
-    /** Checks whether a given index is valid, and returns it as an integer if valid.
+    /**
+     * Checks whether a given index is valid, and returns it as an integer if valid.
      *
      * @param input String representation of the position of the task.
      * @return integer representing index in the list.
@@ -122,7 +128,8 @@ public class TaskList {
 
     }
 
-    /** Converts the current list of tasks to ArrayList of strings of their data.
+    /**
+     * Converts the current list of tasks to ArrayList of strings of their data.
      *
      * @return ArrayList of String each containing the data representation of a task in the list.
      */

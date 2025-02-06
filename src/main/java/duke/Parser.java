@@ -18,7 +18,8 @@ public class Parser {
         BYE
     }
 
-    /** Validates the date given in yyyy-mm-dd format and returns it as a LocalDate if date is valid.
+    /**
+     * Validates the date given in yyyy-mm-dd format and returns it as a LocalDate if date is valid.
      *
      * @param input String of (possibly) a date in format yyyy-mm-dd.
      * @return LocalDate of given date if input is valid.
@@ -39,7 +40,8 @@ public class Parser {
 
     }
 
-    /** Processes, validates and executes commands.
+    /**
+     * Processes, validates and executes commands.
      *
      * @param input from user, which may contain a valid command.
      * @param tasks for commands involving the current list of tasks.

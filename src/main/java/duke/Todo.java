@@ -8,7 +8,8 @@ public class Todo extends Task {
         super(newItem);
     }
 
-    /** Creates a new Todo.
+    /**
+     * Creates a new Todo.
      * Takes on additional parameter to initialise completed tasks.
      * Only used to recover data from file on initialisation.
      */
@@ -23,7 +24,7 @@ public class Todo extends Task {
 
     @Override
     public String toString() {
-        return "[T]["+this.getStatus()+"] " + this.description;
+        return "[T][" + this.getStatus() + "] " + this.description;
     }
 
 }
