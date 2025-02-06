@@ -19,9 +19,7 @@ public class TaskList {
      */
     public void addItem(Task newTask) {
         tasks.add(newTask);
-        System.out.println("\tIn accordance to your wishes, the following task has been added: ");
-        System.out.println("\t  " + newTask);
-        System.out.println("\tYou now have " + tasks.size() + ((tasks.size()==1)?" task.":" tasks."));
+        UI.displaySuccessfulAddMessage(newTask, tasks);
     }
 
     /** Removes a task from the list, given its position in the list.
@@ -32,10 +30,8 @@ public class TaskList {
     public void removeItem(String input) throws InvalidIndexException {
         try {
             int index = validateIndex(input);
-            System.out.println("In accordance to your wishes, the following task has been removed: ");
-            System.out.println("\t  " + tasks.get(index));
-            tasks.remove(index);
-            System.out.println("\tYou now have " + tasks.size() + ((tasks.size()==1)?" task.":" tasks."));
+            System.out.println(tasks.size());
+            UI.displaySuccessfulDeleteMessage(tasks, tasks.remove(index));
         } catch (InvalidIndexException e) {
             throw new InvalidIndexException();
         }
@@ -45,7 +41,7 @@ public class TaskList {
     public void displayItems() {
         int index = 0;
         for (Task task : tasks) {
-            System.out.println("\t" + Integer.valueOf(++index).toString() + ". " + task.toString());
+            UI.displaySomeLine("\t" + Integer.valueOf(++index).toString() + ". " + task.toString());
         }
     }
 
@@ -58,17 +54,19 @@ public class TaskList {
         String[] components = line.split(" \\| ");
         Task newTask = new Task("default");
 
-        if (components[0].equals("T")) {
-            // duke.Todo
-            newTask = new Todo(components[2], components[1].equals("X"));
-        } else if (components[0].equals("D")) {
-            // duke.Deadline
-            newTask = new Deadline(components[2], LocalDate.parse(components[3]), components[1].equals("X"));
-        } else if (components[0].equals("E")) {
-            // duke.Event
-            newTask = new Event(components[2], LocalDate.parse(components[3]),
-                    LocalDate.parse(components[4]), components[1].equals("X"));
-        }
+        newTask = switch (components[0]) {
+            case "T" ->
+                // duke.Todo
+                    new Todo(components[2], components[1].equals("X"));
+            case "D" ->
+                // duke.Deadline
+                    new Deadline(components[2], LocalDate.parse(components[3]), components[1].equals("X"));
+            case "E" ->
+                // duke.Event
+                    new Event(components[2], LocalDate.parse(components[3]),
+                            LocalDate.parse(components[4]), components[1].equals("X"));
+            default -> newTask;
+        };
 
         tasks.add(newTask);
 
@@ -112,7 +110,7 @@ public class TaskList {
      */
     public int validateIndex(String input) throws InvalidIndexException {
         try {
-            int index = Integer.parseInt(input) - 1;
+            int index = Integer.parseInt(input) -1;
             if (index < 0 || index >= tasks.size()) {
                 throw new InvalidIndexException();
             }
@@ -139,8 +137,8 @@ public class TaskList {
     public void findAndDisplay(String input) {
         int index = 0;
         for (Task task : tasks) {
-            if (task.getDescription().equals(input)) {
-                System.out.println("\t" + Integer.valueOf(++index).toString() + ". " + task.toString());
+            if (task.getDescription().contains(input)) {
+                System.out.println("\t" + Integer.valueOf(++index).toString() + ". " + task);
             }
         }
     }

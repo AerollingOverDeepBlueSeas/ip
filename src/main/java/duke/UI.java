@@ -4,13 +4,14 @@ import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /** Represents the user interface. */
 public class UI {
 
-    private static Scanner input;
-    private static PrintWriter pw;
+    private static Scanner input = new Scanner(System.in);
+    private static PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
 
     String line = "\t⊱ ──── {⋆⌘⋆} ──── ⊰⊱ ────── {⋆⌘⋆} ────── ⊰⊱ ──── {⋆⌘⋆} ──── ⊰";
     String greeting = """
@@ -44,6 +45,43 @@ public class UI {
      */
     public String acceptInput() {
         return input.nextLine();
+    }
+
+    /** Displays message for successful execution of task adding. */
+    public static void displaySuccessfulAddMessage(Task newTask, ArrayList<Task> tasks) {
+        pw.println("\tIn accordance to your wishes, the following task has been added: ");
+        pw.println("\t  " + newTask);
+        pw.println("\tYou now have " + tasks.size() + ((tasks.size()==1)?" task.":" tasks."));
+        pw.flush();
+    }
+
+    /** Displays message for successful execution of task marking. */
+    public static void displaySuccessfulMarkMessage(Task newTask) {
+        System.out.println("\tIn accordance to your wishes, the following task has been marked as completed.");
+        System.out.println("\t" + newTask);
+        pw.flush();
+    }
+
+    /** Displays message for successful execution of task unmarking. */
+    public static void displaySuccessfulUnmarkMessage(Task newTask) {
+        System.out.println("\tIn accordance to your wishes, the completion status of the following task has been revoked." +
+                "\n\tPlease see to it that you complete it soon.");
+        System.out.println("\t" + newTask);
+        pw.flush();
+    }
+
+    /** Displays message for successful execution of task deleting. */
+    public static void displaySuccessfulDeleteMessage(ArrayList<Task> tasks, Task task) {
+        System.out.println("In accordance to your wishes, the following task has been removed: ");
+        System.out.println("\t  " + task);
+        System.out.println("\tYou now have " + tasks.size() + ((tasks.size()==1)?" task.":" tasks."));
+        pw.flush();
+    }
+
+    /** Prints argument to the screen. */
+    public static void displaySomeLine(String someLine) {
+        pw.println(someLine);
+        pw.flush();
     }
 
     /** Displays error messages when encountered. */

@@ -42,8 +42,7 @@ public class Task {
      */
     public void markAsDone() {
         this.isDone = true;
-        System.out.println("\tIn accordance to your wishes, the following task has been marked as completed.");
-        System.out.println("\t"+this.toString());
+        UI.displaySuccessfulMarkMessage(this);
     }
 
     /** Marks task as not done.
@@ -51,9 +50,7 @@ public class Task {
      */
     public void unmarkAsDone() {
         this.isDone = false;
-        System.out.println("\tIn accordance to your wishes, the completion status of the following task has been revoked." +
-                "\n\tPlease see to it that you complete it soon.");
-        System.out.println("\t"+this.toString());
+        UI.displaySuccessfulUnmarkMessage(this);
     }
 
 
