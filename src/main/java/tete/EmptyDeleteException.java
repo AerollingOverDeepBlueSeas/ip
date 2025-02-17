@@ -1,4 +1,4 @@
-package duke;
+package tete;
 
 /** Represents exception caused when no index is provided for deletion */
 public class EmptyDeleteException extends TeteException {

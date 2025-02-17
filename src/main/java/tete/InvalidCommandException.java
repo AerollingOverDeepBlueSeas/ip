@@ -1,4 +1,4 @@
-package duke;
+package tete;
 
 /** Represents exception caused when the command keyword is invalid. */
 public class InvalidCommandException extends TeteException {

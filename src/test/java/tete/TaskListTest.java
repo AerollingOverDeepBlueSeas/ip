@@ -1,4 +1,4 @@
-package duke;
+package tete;
 
 import org.junit.jupiter.api.Test;
 

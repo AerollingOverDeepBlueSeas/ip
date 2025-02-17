@@ -1,4 +1,4 @@
-package duke;
+package tete;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -47,10 +47,12 @@ public class Parser {
      * @param tasks for commands involving the current list of tasks.
      * @param storage for commands involving file operations.
      * @throws TeteException if command is invalid or other exceptions are encountered when executing a valid command.
+     * @return String containing output of command execution, or error message
      */
-    public void parseCommand(String input, TaskList tasks, Storage storage) throws TeteException {
+    String parseCommand(String input, TaskList tasks, Storage storage) throws TeteException {
         Command command;
         String[] inputs = input.split(" ");
+        String output = "";
 
         // Validating command keyword
         try {
@@ -61,24 +63,24 @@ public class Parser {
 
         switch (command) {
         case LIST:
-            tasks.displayItems();
+            output = tasks.displayItems();
             break;
         case MARK:
-            tasks.markItem(inputs[1]);
+            output = tasks.markItem(inputs[1]);
             break;
         case UNMARK:
-            tasks.unmarkItem(inputs[1]);
+            output = tasks.unmarkItem(inputs[1]);
             break;
         case DELETE:
             if (inputs.length == 2) {
-                tasks.removeItem(inputs[1]);
+                output = tasks.removeItem(inputs[1]);
             } else {
                 throw new EmptyDeleteException();
             }
             break;
         case TODO:
             if (inputs.length > 1) {
-                tasks.addItem(new Todo(input.replaceFirst("todo ", "")));
+                output = tasks.addItem(new Todo(input.replaceFirst("todo ", "")));
             } else {
                 throw new EmptyTodoException();
             }
@@ -88,7 +90,7 @@ public class Parser {
                 if (input.contains(" /by ")) {
                     String[] temp = input.replaceFirst("deadline ", "").split(" /by ");
                     LocalDate by = Parser.validateDate(temp[1]);
-                    tasks.addItem(new Deadline(temp[0], by));
+                    output = tasks.addItem(new Deadline(temp[0], by));
                 } else {
                     if (input.contains("/by")) {
                         throw new MissingFieldContentsException("/by");
@@ -110,7 +112,7 @@ public class Parser {
                     if (temp.length == 3) {
                         LocalDate from = Parser.validateDate(temp[1]);
                         LocalDate to = Parser.validateDate(temp[2]);
-                        tasks.addItem(new Event(temp[0], from, to));
+                        output = tasks.addItem(new Event(temp[0], from, to));
                     } else {
                         throw new MissingFieldContentsException("/from and/or /to");
                     }
@@ -125,7 +127,7 @@ public class Parser {
                 throw new EmptyEventException();
             }
         case FIND:
-            tasks.findAndDisplay(inputs[1]);
+            output = tasks.findAndDisplay(inputs[1]);
             break;
         case BYE:
             try {
@@ -135,6 +137,8 @@ public class Parser {
             }
             break;
         }
+
+        return output;
 
     }
 

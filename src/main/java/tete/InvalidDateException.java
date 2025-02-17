@@ -1,4 +1,4 @@
-package duke;
+package tete;
 
 /** Represents exception caused when the given date is invalid. */
 public class InvalidDateException extends TeteException {

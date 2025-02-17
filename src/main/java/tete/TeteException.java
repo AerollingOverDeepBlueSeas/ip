@@ -1,4 +1,4 @@
-package duke;
+package tete;
 
 /** Represents all exceptions unique to Tete. */
 public class TeteException extends RuntimeException {
