@@ -1,4 +1,4 @@
-package duke;
+package tete;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,9 +18,10 @@ public class TaskList {
      *
      * @param newTask to be added to the list.
      */
-    public void addItem(Task newTask) {
+    public String addItem(Task newTask) {
         tasks.add(newTask);
         UI.displaySuccessfulAddMessage(newTask, tasks);
+        return UI.returnSuccessfulAddMessage(newTask, tasks);
     }
 
     /**
@@ -29,22 +30,27 @@ public class TaskList {
      * @param input String representation of the position of the task.
      * @throws InvalidIndexException when the input leads to an invalid index.
      */
-    public void removeItem(String input) throws InvalidIndexException {
+    public String removeItem(String input) throws InvalidIndexException {
         try {
             int index = validateIndex(input);
             System.out.println(tasks.size());
             UI.displaySuccessfulDeleteMessage(tasks, tasks.remove(index));
+            return UI.returnSuccessfulDeleteMessage(tasks, tasks.remove(index));
         } catch (InvalidIndexException e) {
             throw new InvalidIndexException();
         }
     }
 
     /** Prints all tasks to screen. */
-    public void displayItems() {
+    public String displayItems() {
         int index = 0;
+        StringBuilder output = new StringBuilder();
         for (Task task : tasks) {
-            UI.displaySomeLine("\t" + Integer.valueOf(++index).toString() + ". " + task.toString());
+            String line = Integer.valueOf(++index).toString() + ". " + task.toString();
+            UI.displaySomeLine(line);
+            output.append(line).append("\n");
         }
+        return output.toString();
     }
 
     /**
@@ -59,13 +65,13 @@ public class TaskList {
 
         newTask = switch (components[0]) {
             case "T" ->
-                // duke.Todo
+                // tete.Todo
                     new Todo(components[2], components[1].equals("X"));
             case "D" ->
-                // duke.Deadline
+                // tete.Deadline
                     new Deadline(components[2], LocalDate.parse(components[3]), components[1].equals("X"));
             case "E" ->
-                // duke.Event
+                // tete.Event
                     new Event(components[2], LocalDate.parse(components[3]),
                             LocalDate.parse(components[4]), components[1].equals("X"));
             default -> newTask;
@@ -82,10 +88,11 @@ public class TaskList {
      * @param input String representation of the position of the task.
      * @throws InvalidIndexException when the input leads to an invalid index.
      */
-    public void markItem(String input) throws InvalidIndexException {
+    public String markItem(String input) throws InvalidIndexException {
         try {
             int index = validateIndex(input);
             tasks.get(index).markAsDone();
+            return UI.returnSuccessfulMarkMessage(tasks.get(index));
         } catch (InvalidIndexException e) {
             throw new InvalidIndexException();
         }
@@ -98,10 +105,11 @@ public class TaskList {
      * @param input String representation of the position of the task.
      * @throws InvalidIndexException when the input leads to an invalid index.
      */
-    public void unmarkItem(String input) throws InvalidIndexException {
+    public String unmarkItem(String input) throws InvalidIndexException {
         try {
             int index = validateIndex(input);
             tasks.get(index).unmarkAsDone();
+            return UI.returnSuccessfulUnmarkMessage(tasks.get(index));
         } catch (InvalidIndexException e) {
             throw new InvalidIndexException();
         }
@@ -141,13 +149,17 @@ public class TaskList {
         return dataList;
     }
 
-    public void findAndDisplay(String input) {
+    public String findAndDisplay(String input) {
         int index = 0;
+        StringBuilder output = new StringBuilder();
         for (Task task : tasks) {
             if (task.getDescription().contains(input)) {
-                System.out.println("\t" + Integer.valueOf(++index).toString() + ". " + task);
+                String line = "\t" + Integer.valueOf(++index).toString() + ". " + task;
+                System.out.println(line);
+                output.append(line).append("\n");
             }
         }
+        return output.toString();
     }
 
 }

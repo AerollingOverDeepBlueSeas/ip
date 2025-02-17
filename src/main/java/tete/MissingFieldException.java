@@ -1,4 +1,4 @@
-package duke;
+package tete;
 
 /** Represents exception caused when a field keyword is missing from a command that needs it. */
 public class MissingFieldException extends TeteException {

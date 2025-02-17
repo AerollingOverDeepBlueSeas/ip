@@ -1,4 +1,4 @@
-package duke;
+package tete;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
@@ -46,6 +46,33 @@ public class UI {
      */
     public String acceptInput() {
         return input.nextLine();
+    }
+
+    /** Returns message for successful execution of task adding. */
+    public static String returnSuccessfulAddMessage(Task newTask, ArrayList<Task> tasks) {
+        return "In accordance to your wishes, the following task has been added: " +
+                "\n" + newTask +
+                "\nYou now have " + tasks.size() + ((tasks.size()==1)?" task.":" tasks.");
+    }
+
+    /** Returns message for successful execution of task marking. */
+    public static String returnSuccessfulMarkMessage(Task newTask) {
+        return "In accordance to your wishes, the following task has been marked as completed." +
+                "\n" + newTask;
+    }
+
+    /** Returns message for successful execution of task unmarking. */
+    public static String returnSuccessfulUnmarkMessage(Task newTask) {
+        return "In accordance to your wishes, the completion status of the following task has been revoked." +
+                "\nPlease see to it that you complete it soon." +
+                "\n" + newTask;
+    }
+
+    /** Returns message for successful execution of task deleting. */
+    public static String returnSuccessfulDeleteMessage(ArrayList<Task> tasks, Task task) {
+        return "In accordance to your wishes, the following task has been removed: " +
+                "\n" + task +
+                "\nYou now have " + tasks.size() + ((tasks.size()==1)?" task.":" tasks.");
     }
 
     /** Displays message for successful execution of task adding. */

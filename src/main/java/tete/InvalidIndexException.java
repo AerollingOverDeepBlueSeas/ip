@@ -1,4 +1,4 @@
-package duke;
+package tete;
 
 /** Represents exception caused when no index is provided to a command that requires one. */
 public class InvalidIndexException extends TeteException {

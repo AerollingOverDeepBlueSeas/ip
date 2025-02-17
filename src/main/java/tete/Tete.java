@@ -1,4 +1,4 @@
-package duke;
+package tete;
 
 /** Class that contains the main program */
 public class Tete {
@@ -31,4 +31,16 @@ public class Tete {
         ui.close();
 
     }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        try {
+            return parser.parseCommand(input, tasks, storage);
+        } catch (TeteException e) {
+            return e.getMessage();
+        }
+    }
+
 }

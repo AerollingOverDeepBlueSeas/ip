@@ -1,4 +1,4 @@
-package duke;
+package tete;
 
 /** Represents exception caused when there is nothing entered to represent a deadline. */
 public class EmptyDeadlineException extends TeteException {

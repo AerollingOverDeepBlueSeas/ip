@@ -1,4 +1,4 @@
-package duke;
+package tete;
 
 /** Represents an item to be done. */
 public class Todo extends Task {

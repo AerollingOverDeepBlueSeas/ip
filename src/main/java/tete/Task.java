@@ -1,4 +1,4 @@
-package duke;
+package tete;
 
 /**
  * Represents a task.
