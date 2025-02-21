@@ -14,7 +14,7 @@ import tete.Tete;
  */
 public class Main extends Application {
 
-    private Tete tete = new Tete();
+    private final Tete tete = new Tete();
 
     @Override
     public void start(Stage stage) {
