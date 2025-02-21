@@ -2,6 +2,7 @@ package tete;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /** Represents the list of tasks during the session. */
 public class TaskList {
@@ -143,18 +144,16 @@ public class TaskList {
      */
     public ArrayList<String> convertToDataList() {
         ArrayList<String> dataList = new ArrayList<>();
-        for (Task task : tasks) {
-            dataList.add(task.toData());
-        }
+        tasks.forEach(task -> dataList.add(task.toData()));
         return dataList;
     }
 
     public String findAndDisplay(String input) {
-        int index = 0;
+        AtomicInteger index = new AtomicInteger();
         StringBuilder output = new StringBuilder();
         for (Task task : tasks) {
             if (task.getDescription().contains(input)) {
-                String line = "\t" + Integer.valueOf(++index).toString() + ". " + task;
+                String line = "\t" + Integer.valueOf(index.incrementAndGet()).toString() + ". " + task;
                 System.out.println(line);
                 output.append(line).append("\n");
             }
