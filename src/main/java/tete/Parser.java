@@ -72,70 +72,27 @@ public class Parser {
             output = tasks.unmarkItem(inputs[1]);
             break;
         case DELETE:
-            if (inputs.length == 2) {
-                output = tasks.removeItem(inputs[1]);
-            } else {
-                throw new EmptyDeleteException();
-            }
+            validateDeleteCommand(inputs);
+            output = tasks.removeItem(inputs[1]);
             break;
         case TODO:
-            if (inputs.length > 1) {
-                output = tasks.addItem(new Todo(input.replaceFirst("todo ", "")));
-            } else {
-                throw new EmptyTodoException();
-            }
+            validateTodoCommand(input, inputs);
+            output = executeTodoCommand(input, tasks);
             break;
         case DEADLINE:
-            if (inputs.length > 1) {
-                if (input.contains(" /by ")) {
-                    String[] temp = input.replaceFirst("deadline ", "").split(" /by ");
-                    LocalDate by = Parser.validateDate(temp[1]);
-                    output = tasks.addItem(new Deadline(temp[0], by));
-                } else {
-                    if (input.contains("/by")) {
-                        throw new MissingFieldContentsException("/by");
-                    } else {
-                        throw new MissingFieldException("/by");
-                    }
-                }
-            } else {
-                throw new EmptyDeadlineException();
-            }
+            validateDeadlineCommand(input, inputs);
+            output = executeDeadlineCommand(input, tasks);
             break;
         case EVENT:
-            if (inputs.length > 1) {
-                if (input.contains(" /from ") && input.contains(" /to ")) {
-                    String[] temp = input.replaceFirst("event ", "")
-                            .replaceFirst(" /from ", "---")
-                            .replaceFirst(" /to ", "---")
-                            .split("---");
-                    if (temp.length == 3) {
-                        LocalDate from = Parser.validateDate(temp[1]);
-                        LocalDate to = Parser.validateDate(temp[2]);
-                        output = tasks.addItem(new Event(temp[0], from, to));
-                    } else {
-                        throw new MissingFieldContentsException("/from and/or /to");
-                    }
-                } else {
-                    if (input.contains(" /to")) {
-                        throw new MissingFieldContentsException("/to");
-                    } else {
-                        throw new MissingFieldException("/from and/or /to");
-                    }
-                }
-            } else {
-                throw new EmptyEventException();
-            }
+            String[] temp = validateEventCommand(input, inputs);
+            output = executeEventCommand(temp, tasks);
+            break;
         case FIND:
             output = tasks.findAndDisplay(inputs[1]);
             break;
         case BYE:
-            try {
-                storage.saveAndClose(tasks.convertToDataList());
-                output = "bye";
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            executeByeCommand(tasks, storage);
+            output = "bye";
             break;
         }
 
@@ -143,5 +100,76 @@ public class Parser {
 
     }
 
+    private static void validateDeleteCommand(String[] inputs) throws EmptyDeleteException {
+        if (inputs.length != 2) {
+            throw new EmptyDeleteException();
+        }
+    }
+
+    private static void validateTodoCommand(String input, String[] inputs) {
+        if (inputs.length <= 1) {
+            throw new EmptyTodoException();
+        }
+    }
+
+    private static String executeTodoCommand(String input, TaskList tasks) {
+        return tasks.addItem(new Todo(input.replaceFirst("todo ", "")));
+    }
+
+    private static void validateDeadlineCommand(String input, String[] inputs) throws TeteException {
+        if (inputs.length == 0 ) {
+            throw new EmptyDeadlineException();
+        } else if (!input.contains(" /by ")) {
+            if (input.contains("/by")) {
+                throw new MissingFieldContentsException("/by");
+            } else {
+                throw new MissingFieldException("/by");
+            }
+        }
+    }
+
+    private static String executeDeadlineCommand(String input, TaskList tasks) throws TeteException {
+        String[] temp = input.replaceFirst("deadline ", "").split(" /by ");
+        LocalDate by = Parser.validateDate(temp[1]);
+        return tasks.addItem(new Deadline(temp[0], by));
+    }
+
+    private static String[] validateEventCommand(String input, String[] inputs) throws TeteException {
+        if (inputs.length > 1) {
+            if (input.contains(" /from ") && input.contains(" /to ")) {
+                String[] temp = input.replaceFirst("event ", "")
+                        .replaceFirst(" /from ", "---")
+                        .replaceFirst(" /to ", "---")
+                        .split("---");
+                if (temp.length == 3) {
+                    return temp;
+                } else {
+                    throw new MissingFieldContentsException("/from and/or /to");
+                }
+            } else {
+                if (input.contains(" /to")) {
+                    throw new MissingFieldContentsException("/to");
+                } else {
+                    throw new MissingFieldException("/from and/or /to");
+                }
+            }
+        } else {
+            throw new EmptyEventException();
+        }
+    }
+
+    private static String executeEventCommand(String[] inputs, TaskList tasks) throws TeteException {
+        LocalDate from = Parser.validateDate(inputs[1]);
+        LocalDate to = Parser.validateDate(inputs[2]);
+        return tasks.addItem(new Event(inputs[0], from, to));
+    }
+
+    private static void executeByeCommand(TaskList tasks, Storage storage) throws TeteException {
+        try {
+            storage.saveAndClose(tasks.convertToDataList());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

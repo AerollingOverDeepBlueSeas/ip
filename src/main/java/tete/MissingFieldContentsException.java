@@ -9,6 +9,7 @@ public class MissingFieldContentsException extends TeteException {
      * @param field specifies the field of the command that is missing contents.
      */
     public MissingFieldContentsException(String field) {
-        super("\tYour command seems to be missing information for the following field(s): " + field + ".");
+        super("\tYour command seems to be missing information for the following field(s): " + field + "."
+        + "\n\tPlease provide me with all the required information in order for me to carry out your instructions.");
     }
 }
