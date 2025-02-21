@@ -132,6 +132,7 @@ public class Parser {
         case BYE:
             try {
                 storage.saveAndClose(tasks.convertToDataList());
+                output = "bye";
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

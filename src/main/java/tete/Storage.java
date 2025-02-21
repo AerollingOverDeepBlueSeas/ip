@@ -21,6 +21,8 @@ public class Storage {
     public Storage() {
         try {
             File data = new File("./src/main/data/list.txt");
+            assert data.exists():"File does not exist";
+
             sc = new Scanner(data);
             initContent = backupContent();
             fw = new FileWriter(data);
