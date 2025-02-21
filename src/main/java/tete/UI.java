@@ -29,6 +29,11 @@ public class UI {
         pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
     }
 
+    public static String returnUnsuccessfulAddMessage(Task newTask) {
+        return "This task has already been added to the list of tasks." +
+                "\nSurely there must be a better approach to duplicating the same task?";
+    }
+
     /** Print the initializing messages of Tete. */
     public void start() {
         pw.println(line);

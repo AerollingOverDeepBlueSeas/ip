@@ -20,6 +20,15 @@ public class TaskList {
      * @param newTask to be added to the list.
      */
     public String addItem(Task newTask) {
+        boolean found = false;
+        for (Task task : tasks) {
+            if (task.toString().equals(newTask.toString())) {
+                found = true;
+            }
+        }
+        if (found) {
+            return UI.returnUnsuccessfulAddMessage(newTask);
+        }
         tasks.add(newTask);
         UI.displaySuccessfulAddMessage(newTask, tasks);
         return UI.returnSuccessfulAddMessage(newTask, tasks);
