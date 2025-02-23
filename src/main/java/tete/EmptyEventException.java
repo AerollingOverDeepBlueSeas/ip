@@ -6,8 +6,8 @@ public class EmptyEventException extends TeteException {
     /** Creates a new EmptyEventException. */
     public EmptyEventException() {
         super("""
-                \tSurely there was an event you need to attend?\
-                \t...or did you simply wish to be invited to one?\
-                \t(Enter some text after the 'event' command.)""");
+                Surely there was an event you need to attend?\
+                ...or did you simply wish to be invited to one?\
+                (Enter some text after the 'event' command.)""");
     }
 }
