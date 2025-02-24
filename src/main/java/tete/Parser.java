@@ -15,7 +15,8 @@ public class Parser {
         UNMARK,
         DELETE,
         FIND,
-        BYE
+        BYE,
+        HELP
     }
 
     /**
@@ -94,6 +95,9 @@ public class Parser {
             executeByeCommand(tasks, storage);
             output = "bye";
             break;
+        case HELP:
+            output = "Visit https://aerollingoverdeepblueseas.github.io/ip/ for help.";
+            break;
         }
 
         return output;
@@ -117,7 +121,7 @@ public class Parser {
     }
 
     private static void validateDeadlineCommand(String input, String[] inputs) throws TeteException {
-        if (inputs.length == 0 ) {
+        if (inputs.length == 1 ) {
             throw new EmptyDeadlineException();
         } else if (!input.contains(" /by ")) {
             if (input.contains("/by")) {
