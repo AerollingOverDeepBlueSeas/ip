@@ -6,8 +6,8 @@ public class InvalidCommandException extends TeteException {
     /** Creates a new InvalidCommandException. */
     public InvalidCommandException() {
         super("""
-                \tI am afraid I do not understand this command.\
-                \tOf course, it is just as likely a result of my ignorance as it is your incompetence.\
-                \t(Commands supported currently: todo, deadline, event, mark, unmark, delete, find, bye""");
+                I am afraid I do not understand this command.\
+                 Of course, it is just as likely a result of my ignorance as it is your incompetence.\
+                \n(Commands supported currently: todo, deadline, event, mark, unmark, delete, find, bye""");
     }
 }

@@ -23,8 +23,12 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+            stage.setTitle("Tête-à-Tête");
             stage.setMinHeight(220);
             stage.setMinWidth(417);
+            stage.setOnCloseRequest(e -> {
+                tete.getResponse("bye");
+            });
             fxmlLoader.<MainWindow>getController().setTete(tete);  // inject the Tete instance
             stage.show();
         } catch (IOException e) {

@@ -6,8 +6,8 @@ public class InvalidIndexException extends TeteException {
     /** Creates a new InvalidIndexException. */
     public InvalidIndexException() {
         super("""
-                \tThere is no task with the specified index.\
-                \tYou may want to run the command 'list' again.\
-                \tFortunately, one of us here has the items remembered.""");
+                There is no task with the specified index.\
+                 You may want to run the command 'list' again.\
+                 Fortunately, one of us here has the items remembered.""");
     }
 }

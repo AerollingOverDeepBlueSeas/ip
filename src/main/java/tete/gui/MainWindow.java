@@ -39,12 +39,12 @@ public class MainWindow extends AnchorPane {
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         dialogContainer.getChildren().add(DialogBox.getTeteDialog(
-                    """
-                    Greetings, I'm Tete.
-                    How may I be of service to you?
-                    Currently, I appear to be a tracker of deadlines, events, and tasks to be done.
-                    (Note: Dates and times are entered in the format yyyy-mm-dd)
-                """, teteImage));
+               """
+               Greetings, I'm Tete.
+               How may I be of service to you?
+               Currently, I appear to be a tracker of deadlines, events, and tasks to be done.
+               (Note: Dates and times are entered in the format yyyy-mm-dd)
+               """, teteImage));
     }
 
     /** Injects the Tete instance */
