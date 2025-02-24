@@ -27,6 +27,7 @@ Ensure you have **Java 17 or above** installed on your computer.
 - `event DESCRIPTION /from START /to END` : Adds an Event task with a start [yyyy/mm/dd] and end [yyyy/mm/dd] time.
 - `delete INDEX` : Deletes the task at the specified index.
 - `find KEYWORD` : Finds tasks containing the given keyword.
+- `help` : Shows link to the User Guide page.
 - `bye` : Tete saves existing tasks and closes. 
 
 Refer to the **Features** section below for details on each command.
@@ -129,15 +130,10 @@ bye
 
 ## Saving Data
 - Tasks are **automatically saved** to the hard disk on closing the app.
-- The data is stored in `src/main/data/tete.txt`.
 
 ## Editing the Data File
 - The data is saved as a **text file**. 
 - **Caution:** If you modify the file incorrectly, Tete may fail to load the data properly.
-
-## FAQ
-### **Q: How do I transfer my data to another computer?**
-A: Install the application on the other computer and copy over the `tete.txt` data file.
 
 ## Command Summary
 
@@ -152,5 +148,6 @@ A: Install the application on the other computer and copy over the `tete.txt` da
 | **Find**   | `find KEYWORD [MORE_KEYWORDS]` (e.g., `find book`)  |
 | **List**   | `list`  |
 | **Bye**    | `bye`  |
+| **Help**   | `help`  |
 
 For any further questions or issues, open an issue in the repository. Enjoy managing your tasks with Tete!
