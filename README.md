@@ -2,6 +2,9 @@
 
 Tete is a desktop app for managing tasks, optimized for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Tete can help you manage your tasks more efficiently than traditional GUI apps. Tete also provides the additional benefit of commentary, to add some fun to the usually drab process of task management. 
 
+## Sample Screenshot
+![Ui.png](docs/Ui.png)
+
 ## Quick Start
 
 ### Prerequisites
