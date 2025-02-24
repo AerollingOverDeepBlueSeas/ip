@@ -27,11 +27,10 @@ public class TaskList {
             }
         }
         if (found) {
-            return UI.returnUnsuccessfulAddMessage(newTask);
+            return Message.returnUnsuccessfulAddMessage(newTask);
         }
         tasks.add(newTask);
-        UI.displaySuccessfulAddMessage(newTask, tasks);
-        return UI.returnSuccessfulAddMessage(newTask, tasks);
+        return Message.returnSuccessfulAddMessage(newTask, tasks);
     }
 
     /**
@@ -44,8 +43,7 @@ public class TaskList {
         try {
             int index = validateIndex(input);
             System.out.println(tasks.size());
-            UI.displaySuccessfulDeleteMessage(tasks, tasks.remove(index));
-            return UI.returnSuccessfulDeleteMessage(tasks, tasks.remove(index));
+            return Message.returnSuccessfulDeleteMessage(tasks, tasks.remove(index));
         } catch (InvalidIndexException e) {
             throw new InvalidIndexException();
         }
@@ -57,7 +55,6 @@ public class TaskList {
         StringBuilder output = new StringBuilder();
         for (Task task : tasks) {
             String line = Integer.valueOf(++index).toString() + ". " + task.toString();
-            UI.displaySomeLine(line);
             output.append(line).append("\n");
         }
         return output.toString();
@@ -102,7 +99,7 @@ public class TaskList {
         try {
             int index = validateIndex(input);
             tasks.get(index).markAsDone();
-            return UI.returnSuccessfulMarkMessage(tasks.get(index));
+            return Message.returnSuccessfulMarkMessage(tasks.get(index));
         } catch (InvalidIndexException e) {
             throw new InvalidIndexException();
         }
@@ -119,7 +116,7 @@ public class TaskList {
         try {
             int index = validateIndex(input);
             tasks.get(index).unmarkAsDone();
-            return UI.returnSuccessfulUnmarkMessage(tasks.get(index));
+            return Message.returnSuccessfulUnmarkMessage(tasks.get(index));
         } catch (InvalidIndexException e) {
             throw new InvalidIndexException();
         }

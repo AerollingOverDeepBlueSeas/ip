@@ -171,6 +171,7 @@ public class Parser {
     private static void executeByeCommand(TaskList tasks, Storage storage) throws TeteException {
         try {
             storage.saveAndClose(tasks.convertToDataList());
+            System.out.println(tasks.convertToDataList());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

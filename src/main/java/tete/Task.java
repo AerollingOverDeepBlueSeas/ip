@@ -46,7 +46,6 @@ public class Task {
      */
     public void markAsDone() {
         this.isDone = true;
-        UI.displaySuccessfulMarkMessage(this);
     }
 
     /**
@@ -55,7 +54,6 @@ public class Task {
      */
     public void unmarkAsDone() {
         this.isDone = false;
-        UI.displaySuccessfulUnmarkMessage(this);
     }
 
 
