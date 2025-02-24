@@ -7,7 +7,7 @@ public class EmptyTodoException extends TeteException {
     public EmptyTodoException() {
         super("""
                 Surely there must be something you ought to do?\
-                Or did you stumble upon this command on by accident?\
-                (Enter some text after the 'todo' command.)""");
+                 Or did you stumble upon this command on by accident?\
+                \n(Enter some text after the 'todo' command.)""");
     }
 }

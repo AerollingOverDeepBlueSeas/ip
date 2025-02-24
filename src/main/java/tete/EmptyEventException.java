@@ -7,7 +7,7 @@ public class EmptyEventException extends TeteException {
     public EmptyEventException() {
         super("""
                 Surely there was an event you need to attend?\
-                ...or did you simply wish to be invited to one?\
-                (Enter some text after the 'event' command.)""");
+                 ...or did you simply wish to be invited to one?\
+                \n(Enter some text after the 'event' command.)""");
     }
 }

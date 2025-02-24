@@ -7,7 +7,7 @@ public class InvalidCommandException extends TeteException {
     public InvalidCommandException() {
         super("""
                 I am afraid I do not understand this command.\
-                Of course, it is just as likely a result of my ignorance as it is your incompetence.\
-                (Commands supported currently: todo, deadline, event, mark, unmark, delete, find, bye""");
+                 Of course, it is just as likely a result of my ignorance as it is your incompetence.\
+                \n(Commands supported currently: todo, deadline, event, mark, unmark, delete, find, bye""");
     }
 }

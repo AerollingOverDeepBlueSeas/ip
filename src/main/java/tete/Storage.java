@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -20,12 +21,12 @@ public class Storage {
      */
     public Storage() {
         try {
-            File data = new File("./src/main/data/list.txt");
-            assert data.exists():"File does not exist";
+            InputStream data = this.getClass().getResourceAsStream("/data/list.txt");
+            assert data != null : "File does not exist";
 
             sc = new Scanner(data);
             initContent = backupContent();
-            fw = new FileWriter(data);
+            fw = new FileWriter(new File("list.txt"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

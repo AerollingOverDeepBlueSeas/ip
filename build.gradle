@@ -44,7 +44,7 @@ test {
 }
 
 application {
-    mainClass.set("tete.Tete")
+    mainClass.set("tete.gui.Launcher")
 }
 
 sourceSets {

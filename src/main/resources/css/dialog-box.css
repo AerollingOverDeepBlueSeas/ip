@@ -5,11 +5,13 @@
     -fx-background-radius: 1em 1em 0 1em;
     -fx-border-radius: 1em 1em 0 1em;
     -fx-text-fill: white;
+    -fx-font: 16px "Garamond";
 }
 
 .reply-label {
     -fx-background-radius: 1em 1em 1em 0;
     -fx-border-radius: 1em 1em 1em 0;
+    -fx-font: 16px "Garamond";
 }
 
 #displayPicture {
